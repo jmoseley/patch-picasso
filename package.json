@@ -38,12 +38,13 @@
     "npx",
     "patch-picasso"
   ],
-  "dependencies": {
-    "@ai-sdk/openai": "^1.1.9",
-    "ai": "^3.4.33",
-    "minimist": "^1.2.8",
-    "openai": "^4.56.0",
-    "typescript": "^5.5.4",
-    "@types/minimist": "^1.2.5"
-  }
+    "dependencies": {
+		"@ai-sdk/openai": "^1.1.9",
+		"ai": "^3.4.33",
+		"minimist": "^1.2.8",
+		"openai": "^4.56.0",
+		"typescript": "^5.5.4",
+		"@types/minimist": "^1.2.5",
+		"@types/node": "^20.14.12"
+	  }
 }
