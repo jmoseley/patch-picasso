@@ -69,6 +69,24 @@ async function postJson(url: string, token: string, body: any) {
 	return res.json();
 }
 
+async function putJson(url: string, token: string, body: any) {
+	const res = await fetch(url, {
+		method: 'PUT',
+		headers: {
+			'Authorization': `Bearer ${token}`,
+			'Accept': 'application/vnd.github+json',
+			'X-GitHub-Api-Version': '2022-11-28',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(body)
+	});
+	if (!res.ok) {
+		const text = await res.text();
+		throw new Error(`GitHub API PUT ${url} failed: ${res.status} ${res.statusText} - ${text}`);
+	}
+	return res.json();
+}
+
 async function main() {
 	const args = minimist(process.argv.slice(2));
 
@@ -163,9 +181,32 @@ async function main() {
 		size: '1024x1024'
 	});
 
-	const imageUrl: string | undefined = image.data?.[0]?.url;
+	let imageUrl: string | undefined = image.data?.[0]?.url;
+
+	// Fallback: if only base64 is returned, try committing the image to the PR head branch
 	if (!imageUrl) {
-		console.warn('[patch-picasso] OpenAI returned no URL for image; skipping image embed.');
+		const b64 = image.data?.[0]?.b64_json as string | undefined;
+		const headRepoFull: string | undefined = pr?.head?.repo?.full_name;
+		const baseRepoFull: string | undefined = pr?.base?.repo?.full_name;
+		const headRef: string | undefined = pr?.head?.ref;
+		if (b64 && headRepoFull && baseRepoFull && headRepoFull === baseRepoFull && headRef) {
+			try {
+				const imgPath = `.github/patch-picasso/${prNumber}-${Date.now()}.png`;
+				const res = await putJson(`${apiBase}/contents/${encodeURIComponent(imgPath)}`, githubToken, {
+					message: `patch-picasso: add generated image for PR #${prNumber}`,
+					content: b64,
+					branch: headRef
+				});
+				imageUrl = res?.content?.download_url || `https://raw.githubusercontent.com/${owner}/${repo}/${encodeURIComponent(headRef)}/${imgPath}`;
+				console.log('[patch-picasso] Uploaded image to repository at', imgPath);
+			} catch (e: any) {
+				console.warn('[patch-picasso] Failed to upload image to repo:', e?.message || e);
+			}
+		} else if (!b64) {
+			console.warn('[patch-picasso] OpenAI did not return URL or base64 image.');
+		} else {
+			console.warn('[patch-picasso] Skipping repo upload (fork or missing branch info).');
+		}
 	}
 
 	// Ensure comment body stays well under GitHub's 65536 char limit
