@@ -1,6 +1,6 @@
 {
   "name": "patch-picasso",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Paints a witty image for your PR and posts it as a comment (using OpenAI + Vercel AI SDK).",
   "bin": {
     "patch-picasso": "dist/index.js"
