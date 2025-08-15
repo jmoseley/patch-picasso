@@ -14,11 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Post funny image to PR
+      - name: Post witty image to PR (current branch)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          npx --yes -p github:YOUR_ORG/YOUR_REPO@main pr-funny-image \
+          npx --yes -p github:${{ github.repository }}@${{ github.ref_name }} patch-picasso \
             --repo "${{ github.repository }}" \
             --pr "${{ github.event.pull_request.number }}"

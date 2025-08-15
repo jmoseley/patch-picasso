@@ -1,6 +1,6 @@
-# pr-funny-image-bot
+# patch-picasso
 
-Generate a funny image for a Pull Request and post it as a comment — all from a self-contained GitHub Action using `npx`, Vercel AI SDK, and OpenAI.
+Paints a witty image for your Pull Request and posts it as a comment — self-contained in a GitHub Action using `npx`, Vercel AI SDK, and OpenAI.
 
 ## What it does
 - Reads PR details (title, body, changed files)
@@ -34,22 +34,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Post funny image to PR
+      - name: Post witty image to PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          npx --yes -p github:YOUR_ORG/YOUR_REPO@main pr-funny-image \
+          npx --yes patch-picasso \
             --repo "${{ github.repository }}" \
             --pr "${{ github.event.pull_request.number }}"
 ```
 
-Replace `YOUR_ORG/YOUR_REPO` with the GitHub repo where this package lives.
-
 ## Inputs
-The CLI accepts the following flags (all optional if running on a `pull_request` event with `GITHUB_REPOSITORY` set):
 - `--repo`: `owner/repo` (defaults to `GITHUB_REPOSITORY`)
-- `--pr` or `--pr-number`: pull request number (auto-detected from event payload if available)
+- `--pr` or `--pr-number`: pull request number (auto-detected on `pull_request` events)
 
 ## How it works
 - Uses GitHub REST API with `GITHUB_TOKEN` to read PR details and post a comment
@@ -63,19 +60,14 @@ The CLI accepts the following flags (all optional if running on a `pull_request`
 
 ## Local test
 ```bash
-# Install deps
 npm install
-
-# Build
 npm run build
-
-# Run (example)
 GITHUB_TOKEN=ghp_example OPENAI_API_KEY=sk-example \
 node dist/index.js --repo your-org/your-repo --pr 123
 ```
 
 ## Notes
-- Images are embedded using the URL returned by OpenAI and may be temporary
+- Images are embedded using the URL returned by OpenAI (or a data URL fallback)
 - No GitHub App is required; everything uses the standard `GITHUB_TOKEN`
 
 ## License
