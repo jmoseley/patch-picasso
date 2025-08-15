@@ -1,7 +1,7 @@
 {
   "name": "patch-picasso",
   "version": "0.1.0",
-  "description": "Paints a witty image for your PR and posts it as a comment (OpenAI + Vercel AI SDK).",
+  "description": "Paints a witty image for your PR and posts it as a comment (using OpenAI + Vercel AI SDK).",
   "bin": {
     "patch-picasso": "dist/index.js"
   },
@@ -24,7 +24,7 @@
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/your-repo.git"
+    "url": "git+https://github.com/jmoseley/patch-picasso.git"
   },
   "keywords": [
     "github",
