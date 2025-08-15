@@ -113,6 +113,6 @@ export async function uploadImageToImagesBranch(params: UploadParams): Promise<s
 	});
 
 	// Return raw URL to the file
-	const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${encodeURIComponent(branchName)}/${pathInRepo}`;
+	const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/refs/heads/${encodeURIComponent(branchName)}/${pathInRepo}`;
 	return rawUrl;
 }
