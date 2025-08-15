@@ -18,14 +18,14 @@ Paints a witty image for your Pull Request and posts it as a comment — self-co
 Copy this workflow into your repo at `.github/workflows/funny-pr-image.yml`:
 
 ```yaml
-name: Funny PR Image
+name: Patch Picasso
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  funny-image:
+  patch-picasso:
     runs-on: ubuntu-latest
     permissions:
       contents: write
