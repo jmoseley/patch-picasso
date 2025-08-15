@@ -15,7 +15,7 @@ Paints a witty image for your Pull Request and posts it as a comment — self-co
 - `OPENAI_API_KEY` (you provide)
 
 ## Quick Start (GitHub Actions)
-Copy this workflow into your repo at `.github/workflows/funny-pr-image.yml`:
+Copy this workflow into your repo at `.github/workflows/patch-picasso.yml`:
 
 ```yaml
 name: Patch Picasso
