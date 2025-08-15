@@ -1,11 +1,11 @@
-name: Funny PR Image
+name: Patch Picasso
 
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  funny-image:
+  patch-picasso:
     runs-on: ubuntu-latest
     permissions:
       contents: write
