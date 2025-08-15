@@ -160,8 +160,7 @@ async function main() {
 	const image = await openai.images.generate({
 		model: 'gpt-image-1',
 		prompt: imagePrompt,
-		size: '1024x1024',
-		response_format: 'url'
+		size: '1024x1024'
 	});
 
 	const imageUrl: string | undefined = image.data?.[0]?.url;
