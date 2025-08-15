@@ -1,0 +1,24 @@
+name: Funny PR Image
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  funny-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Post funny image to PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          npx --yes -p github:YOUR_ORG/YOUR_REPO@main pr-funny-image \
+            --repo "${{ github.repository }}" \
+            --pr "${{ github.event.pull_request.number }}"

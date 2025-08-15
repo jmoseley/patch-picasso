@@ -1,0 +1,46 @@
+{
+  "name": "pr-funny-image-bot",
+  "version": "0.1.0",
+  "description": "Generate a funny image for a PR and post it as a comment using OpenAI and Vercel AI SDK.",
+  "bin": {
+    "pr-funny-image": "dist/index.js"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -w -p tsconfig.json",
+    "prepare": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/your-repo.git"
+  },
+  "keywords": [
+    "github",
+    "action",
+    "openai",
+    "vercel-ai",
+    "image",
+    "pr",
+    "npx"
+  ],
+  "dependencies": {
+    "@ai-sdk/openai": "^1.1.9",
+    "ai": "^3.4.33",
+    "minimist": "^1.2.8",
+    "openai": "^4.56.0",
+    "typescript": "^5.5.4",
+    "@types/minimist": "^1.2.5"
+  }
+}
