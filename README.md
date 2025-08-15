@@ -28,7 +28,7 @@ jobs:
   funny-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
     steps:
       - name: Checkout
@@ -52,6 +52,7 @@ jobs:
 - Uses GitHub REST API with `GITHUB_TOKEN` to read PR details and post a comment
 - Uses Vercel AI SDK (`ai`, `@ai-sdk/openai`) to synthesize a witty image prompt and caption
 - Uses OpenAI Images (`gpt-image-1`) to generate an image and embeds its URL in the comment
+- If only base64 is returned, uploads the image into the PR head branch using the GitHub Contents API and links to the raw file (requires `contents: write` and PR from the same repo)
 - Adds a hidden marker to detect if it has already commented, ensuring idempotency
 
 ## Environment Variables
@@ -67,7 +68,7 @@ node dist/index.js --repo your-org/your-repo --pr 123
 ```
 
 ## Notes
-- Images are embedded using the URL returned by OpenAI (or a data URL fallback)
+- Forked PRs cannot receive uploaded images to the base repo by default; the fallback upload is skipped
 - No GitHub App is required; everything uses the standard `GITHUB_TOKEN`
 
 ## License
