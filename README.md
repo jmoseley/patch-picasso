@@ -51,8 +51,9 @@ jobs:
 ## How it works
 - Uses GitHub REST API with `GITHUB_TOKEN` to read PR details and post a comment
 - Uses Vercel AI SDK (`ai`, `@ai-sdk/openai`) to synthesize a witty image prompt and caption
-- Uses OpenAI Images (`gpt-image-1`) to generate an image and embeds its URL in the comment
-- If only base64 is returned, uploads the image into the PR head branch using the GitHub Contents API and links to the raw file (requires `contents: write` and PR from the same repo)
+- Uses OpenAI Images (`gpt-image-1`) to generate an image
+- Adds the image as a commit to the `patch-picasso-images` branch (configurable)
+- Adds a comment with the image to the PR
 - Adds a hidden marker to detect if it has already commented, ensuring idempotency
 
 ## Environment Variables
